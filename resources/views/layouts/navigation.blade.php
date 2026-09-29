@@ -14,10 +14,24 @@
                         class="{{ request()->routeIs('categories.*') ? 'text-indigo-600' : 'text-gray-500' }}">
                         Kategori
                     </a>
+
                     <a href="{{ route('products.index') }}"
                         class="{{ request()->routeIs('products.*') ? 'text-indigo-600' : 'text-gray-500' }}">
                         Produk
                     </a>
+                @endif
+
+                <a href="{{ route('suppliers.index') }}"
+                    class="{{ request()->routeIs('suppliers.*') ? 'text-indigo-600' : 'text-gray-500' }}">
+                    Supplier
+                </a>
+
+                <a href="{{ route('purchases.index') }}"
+                    class="{{ request()->routeIs('purchases.*') ? 'text-indigo-600' : 'text-gray-500' }}">
+                    Purchase
+                </a>
+
+                @if (auth()->user()->role === 'admin')
                     <a href="{{ route('report.sales') }}"
                         class="{{ request()->routeIs('report.sales') ? 'text-indigo-600' : 'text-gray-500' }}">
                         Laporan
