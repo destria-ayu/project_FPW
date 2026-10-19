@@ -2,63 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Menampilkan halaman tabel daftar supplier
     public function index()
     {
-        //
+        $suppliers = Supplier::all();
+        return view('suppliers.index', compact('suppliers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Menampilkan halaman form tambah data
     public function create()
     {
-        //
+        return view('suppliers.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Memproses penyimpanan data ke database
     public function store(Request $request)
     {
-        //
-    }
+        // 1. Validasi inputan
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string'
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        // 2. Simpan ke database
+        Supplier::create($validatedData);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // 3. Redirect kembali ke index dengan notifikasi
+        return redirect()->route('suppliers.index')->with('success', 'Data supplier berhasil ditambahkan!');
     }
 }

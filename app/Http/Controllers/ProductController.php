@@ -13,11 +13,15 @@ class ProductController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $products = Product::latest()->paginate(10);
+{
+    $products = Product::with('category')->latest()->paginate(10);
+ 
+    return view('master-data.product.index', compact('products'));
+}
 
-        return view('product.index', compact('products'));
-    }
+
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -26,7 +30,7 @@ class ProductController extends Controller
     {
         $categories = Category::orderBy('name')->get();
 
-        return view('product.create', compact('categories'));
+        return view('master-data.product.create', compact('categories'));
     }
 
     /**
