@@ -17,6 +17,29 @@
             @endif
 
             <x-card>
+                {{-- Form Pencarian dan Filter Kategori --}}
+                <form method="GET" action="{{ route('products.index') }}" class="flex gap-3 mb-4">
+                    <input type="text" name="search" value="{{ request('search') }}"
+                        placeholder="Cari nama atau kode produk..."
+                        class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+
+                    <select name="category_id" class="rounded-md border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <option value="">Semua Kategori</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" @selected(request('category_id') == $category->id)>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">
+                        Cari
+                    </button>
+                    <a href="{{ route('products.index') }}" class="px-4 py-2 text-gray-500 text-sm hover:text-gray-700 flex items-center">
+                        Reset
+                    </a>
+                </form>
+
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
@@ -46,31 +69,30 @@
                                     @endif
                                 </td>
                                 
-<td class="px-4 py-2 text-sm text-center">
-    <div class="flex items-center justify-center gap-3">
-        {{-- Tombol Ubah --}}
-        <a href="{{ route('products.edit', $product) }}"
-           class="text-indigo-600 hover:text-indigo-800">
-            Ubah
-        </a>
+                                <td class="px-4 py-2 text-sm text-center">
+                                    <div class="flex items-center justify-center gap-3">
+                                        {{-- Tombol Ubah --}}
+                                        <a href="{{ route('products.edit', $product) }}"
+                                           class="text-indigo-600 hover:text-indigo-800">
+                                            Ubah
+                                        </a>
 
-        {{-- Tombol Hapus dengan konfirmasi --}}
-        <form action="{{ route('products.destroy', $product) }}"
-              method="POST"
-              onsubmit="return confirm('Yakin ingin menghapus produk {{ $product->name }}?')"
-              class="inline">
+                                        {{-- Tombol Hapus dengan konfirmasi --}}
+                                        <form action="{{ route('products.destroy', $product) }}"
+                                              method="POST"
+                                              onsubmit="return confirm('Yakin ingin menghapus produk {{ $product->name }}?')"
+                                              class="inline">
 
-            @csrf
-            @method('DELETE')
+                                            @csrf
+                                            @method('DELETE')
 
-            <button type="submit"
-                    class="text-red-600 hover:text-red-800">
-                Hapus
-            </button>
-        </form>
-    </div>
-</td>
-
+                                            <button type="submit"
+                                                    class="text-red-600 hover:text-red-800">
+                                                Hapus
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                             <tr>
