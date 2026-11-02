@@ -62,9 +62,19 @@ public function index(Request $request)
      * Display the specified resource.
      */
     public function show(Product $product)
-    {
-        //
-    }
+{
+    $product->load(['transactionDetails.transaction']);
+ 
+    $totalTerjual = $product->transactionDetails->sum('qty');
+ 
+    $riwayat = $product->transactionDetails()
+        ->with('transaction')
+        ->latest()
+        ->take(10)
+        ->get();
+ 
+    return view('master-data.product.show', compact('product', 'totalTerjual', 'riwayat'));
+}
 
     /**
      * Show the form for editing the specified resource.

@@ -71,6 +71,12 @@
                                 
                                 <td class="px-4 py-2 text-sm text-center">
                                     <div class="flex items-center justify-center gap-3">
+                                        {{-- Tombol Detail --}}
+                                        <a href="{{ route('products.show', $product) }}"
+                                           class="text-green-600 hover:text-green-800">
+                                            Detail
+                                        </a>
+
                                         {{-- Tombol Ubah --}}
                                         <a href="{{ route('products.edit', $product) }}"
                                            class="text-indigo-600 hover:text-indigo-800">
